@@ -82,7 +82,9 @@ object TheGame {
 
     try {
       val secret = startGame()
+
       val Correct(numTries) = userTry(secret)
+
       endGame(numTries)
     } catch {
       case _: RepeatingDigitsException => println("Not allow repeating digits in secret, something gone wrong!")

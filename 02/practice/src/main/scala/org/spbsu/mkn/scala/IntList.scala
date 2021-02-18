@@ -3,9 +3,7 @@ package org.spbsu.mkn.scala
 import org.spbsu.mkn.scala.IntList._
 
 sealed trait IntList {
-    def i: Int
-
-    def head: Int = i
+    def head: Int
 
     def tail: IntList
 
@@ -18,16 +16,16 @@ sealed trait IntList {
     def ::(elem: Int): IntList = new ::(elem, this)
 }
 
-case class ::(override val i: Int, override val tail: IntList) extends IntList {
+case class ::(override val head: Int, override val tail: IntList) extends IntList {
     override def drop(n: Int): IntList = if (n == 0) this else tail.drop(n - 1)
 
-    override def take(n: Int): IntList = if (n == 0) IntNil else i :: tail.take(n - 1)
+    override def take(n: Int): IntList = if (n == 0) IntNil else head :: tail.take(n - 1)
 
-    override def map(f: Int => Int): IntList = f(i) :: tail.map(f)
+    override def map(f: Int => Int): IntList = f(head) :: tail.map(f)
 }
 
 case object IntNil extends IntList {
-    override def i: Int = undef
+    override def head: Int = undef
 
     override def tail: IntList = undef
 
